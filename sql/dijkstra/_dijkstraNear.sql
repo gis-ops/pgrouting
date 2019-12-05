@@ -99,7 +99,7 @@ CREATE OR REPLACE FUNCTION _pgr_dijkstraNear(
 RETURNS SETOF RECORD AS
 $BODY$
     SELECT seq, path_seq, start_vid, end_vid, node, edge, cost, agg_cost
-    FROM _pgr_dijkstra(_pgr_get_statement($1), ARRAY[$2]::BIGINT[], ARRAY[$3]::BIGINT[], $5, false, false, $4);
+    FROM _pgr_dijkstra(_pgr_get_statement($1), $2::BIGINT[], $3::BIGINT[], $5, false, false, $4);
 $BODY$
 LANGUAGE sql VOLATILE
 COST 100
