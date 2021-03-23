@@ -1,0 +1,23 @@
+version: '3'
+
+volumes:
+  postgres-data:
+
+services:
+  db:
+#    image: pgr-develop
+    image: ghcr.io/gis-ops/pgrouting:3.2.0-dev
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      # If you need to create multiple database you can add coma separated databases eg gis,data
+      - POSTGRES_DB=gis
+      - POSTGRES_USER=gisops
+      - POSTGRES_PASS=gisops
+      - POSTGRES_MULTIPLE_EXTENSIONS=pgrouting,cti_optimizer,postgis,hstore,postgis_topology,ogr_fdw
+      - ALLOW_IP_RANGE=0.0.0.0/0
+    ports:
+      - 5447:5432
+    restart: on-failure
+    healthcheck:
+      test: "exit 0"
